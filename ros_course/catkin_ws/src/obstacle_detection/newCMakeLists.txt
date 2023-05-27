@@ -1,0 +1,51 @@
+## 1. Required CMake Version
+cmake_minimum_required(VERSION 2.8.3)
+## 2. Package Name
+project(yourpackagename)
+
+
+## 3. Find other CMake/Catkin packages needed for build
+find_package(catkin REQUIRED COMPONENTS
+  rospy
+  sensor_msgs
+  message_generation
+  std_msgs
+  cv_bridge
+  geometry_msgs
+  image_transport
+)
+
+find_package(OpenCV REQUIRED)
+
+## 4. Enable Python module support
+catkin_python_setup()
+
+## 5. Message/Service/Action Generators
+add_message_files(
+  FILES
+  yourfilename.msg
+  yourfilename2.msg
+)
+## 6. Invoke message/service/action generation
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+   sensor_msgs
+   geometry_msgs
+)
+## 7. Specify package build info export
+catkin_package(
+LIBRARIES name_of_your_package
+CATKIN_DEPENDS cv_bridge rospy sensor_msgs
+DEPENDS system lib
+CATKIN_DEPENDS message_runtime
+)
+## 8. Libraries/Executables to build
+install(PROGRAMS
+    src/nameofyourfile.py
+	DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## 9. Tests to build (catkin_add_gtest())
+## 10. Install rules (install())
+
